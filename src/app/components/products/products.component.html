@@ -27,6 +27,7 @@
 </p-table>
 
 <p-dialog header="Guardar producto" [(visible)]="displayDialog" [modal]="true" [style]="{width: '70vw'}">
+  <p-message severity="error" *ngIf="hasError" text="Error al guardar"></p-message>
   <form [formGroup]="formGroup">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12 p-md-6">

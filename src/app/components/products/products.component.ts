@@ -15,6 +15,7 @@ export class ProductsComponent implements OnInit {
   displayDialog: boolean;
   formGroup: FormGroup;
   productIdToSave: number;
+  hasError = false;
 
   constructor(
     private productService: ProductService,
@@ -45,6 +46,7 @@ export class ProductsComponent implements OnInit {
   openDialog(product?: ProductModel){
     this.displayDialog = true;
     this.productIdToSave = product ? product.productId : null;
+    this.hasError = false;
 
     if(product){
       this.formGroup.controls["name"].setValue(product ? product.name : null);
@@ -68,6 +70,8 @@ export class ProductsComponent implements OnInit {
         this.products.push(res);
         this.displayDialog = false;
         this.messageService.add({severity:'success', detail:'Producto "'+payload.name+'" agregado'});
+      }, ()=> {
+        this.hasError = true;
       });
     }else{
       let payload: ProductModel = {
@@ -83,6 +87,8 @@ export class ProductsComponent implements OnInit {
 
         this.displayDialog = false;
         this.messageService.add({severity:'success', detail:'Producto actualizado'});
+      }, ()=> {
+        this.hasError = true;
       });
     }
   }
